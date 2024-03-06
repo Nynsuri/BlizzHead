@@ -1,0 +1,26 @@
+.accordion .answer{
+    display: none;
+}
+.question{
+    background-color: black;
+    color: black;
+    padding: 2%;
+    color: white;
+}
+.accordion.active .answer{
+    display: block;
+    background-color: black;
+    color: rgb(19, 19, 19);
+    padding: 2%;
+    color: white;
+}
+.question::before{
+    content: '+ ';
+}
+.question:hover, .accordion.active .question{
+    background-color: rgb(10, 10, 10);
+    cursor: pointer;
+}
+.accordion.active .question::before{
+    content: '- ';
+}
