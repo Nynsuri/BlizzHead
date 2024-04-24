@@ -1,0 +1,10 @@
+{
+  
+      "stranky": {
+        "index": ["css/style.css", "css/slider.css"],
+        "overwatch": ["css/style.css", "css/banner.css"],
+        "wow": ["css/style.css", "css/banner.css"],
+        "kontakt": ["css/style.css", "css/banner.css","css/form.css", "css/accordion.css"],
+        "thankyou": ["css/style.css", "css/banner.css"]
+      }
+}

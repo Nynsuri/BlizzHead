@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/slider.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <?php  
   $file_path = "parts/header.php"; 
+  include_once "functions.php";
+  include_once "parts/nav.php";
   if(!include($file_path)) 
   {     
     echo"Failed to include $file_path";
@@ -19,29 +19,31 @@
     
     <main>
       <section class="slides-container">
-        <div class="slide fade">
-          <img src="img/banner1.jpeg">
-          <div class="slide-text-blizz">
-            Blizzard Entertainment
-          </div>
-        </div>
-        
-        <div class="slide fade">
-          <img src="img/banner2.jpeg">
-          <div class="slide-text-wow">
-            World of Warcraft
-          </div>
-        </div>
-        
-        <div class="slide fade">
-          <img src="img/banner3.jpeg">
-          <div class="slide-text-ow">
-            Overwatch
-          </div>
-        </div>
-        
-        <a id="prev" class="prev">❮</a>
-        <a id="next" class="next">❯</a>
+     
+         <div class="slide fade">
+         <img src="img/banner1.jpeg">
+         <div class="slide-text-blizz">
+           Blizzard Entertainment
+         </div>
+       </div>
+       
+       <div class="slide fade">
+         <img src="img/banner2.jpeg">
+         <div class="slide-text-wow">
+           World of Warcraft
+         </div>
+       </div>
+       
+       <div class="slide fade">
+         <img src="img/banner3.jpeg">
+         <div class="slide-text-ow">
+           Overwatch
+         </div>
+       </div>
+       
+       <a id="prev" class="prev">❮</a>
+       <a id="next" class="next">❯</a>
+       
         
       </section>
       <section class="container">
