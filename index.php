@@ -8,13 +8,10 @@
 </head>
 <body>
 <?php  
-  $file_path = "parts/header.php"; 
+  include_once "parts/header.php";
   include_once "functions.php";
   include_once "parts/nav.php";
-  if(!include($file_path)) 
-  {     
-    echo"Failed to include $file_path";
-  } 
+ 
   ?>
     
     <main>
@@ -68,11 +65,7 @@
     </main>
     
     <?php  
-  $file_path = "parts/footer.php"; 
-  if(!include($file_path)) 
-  {     
-    echo"Failed to include $file_path";
-  } 
+include_once "parts/footer.php";
   ?>
 
     <script src="js/menu.js"></script>
