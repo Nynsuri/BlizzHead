@@ -2,7 +2,7 @@
 include_once "functions.php";
 
 $menu = getMenuData("header");
-
+   getCSS();
 
 ?>
 <header  class="container main-header">

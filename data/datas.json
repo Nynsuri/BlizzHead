@@ -1,5 +1,15 @@
 {
-  
+  "otazky": [
+    "Ano?",
+    "Ano?",
+    "Ano?"
+  ],
+  "odpovede": [
+    "Ano.",
+    "Nie.",
+    "¯\\_(ツ)_/¯"
+  ],
+ 
       "stranky": {
         "index": ["css/style.css", "css/slider.css"],
         "overwatch": ["css/style.css", "css/banner.css"],
