@@ -38,6 +38,10 @@ function getMenuData(string $type): array{
                 'kontakt' => [
                     'name' => 'Kontakt',
                     'path' => 'kontakt.php',
+                ],
+                'login' =>[
+                    'name' => 'Login',
+                    'path' => 'login.php',
                 ]
             ];
         }
