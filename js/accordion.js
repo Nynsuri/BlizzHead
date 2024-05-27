@@ -1,6 +1,13 @@
-var accordion = document.getElementsByClassName('accordion');
-for (a of accordion){
-    a.addEventListener("click",function(){
-        this.classList.toggle('active');
-    })
-}
+
+    function toggleEditForm(id) {
+        var form = document.querySelector('#collapse' + id + ' .edit-form');
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+
+
+
+

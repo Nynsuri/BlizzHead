@@ -43,7 +43,6 @@
   <?php   
   include_once "parts/footer.php";
   ?>
-<script src="js/accordion.js"></script>
 <script src="js/menu.js"></script>
 </body>
 </html>

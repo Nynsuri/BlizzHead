@@ -4,6 +4,7 @@
 }
 body{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(8,8,8);
 }
 /*ŠTÝLY PRE FONTY*/
 h1{
@@ -26,6 +27,7 @@ h1,h2,h3,h4,h5,h6,p,a,li{
 }
 main{
   margin-top:60px;
+  background-color: rgb(8,8,8);
 }
 
 main section:nth-child(even){
@@ -124,6 +126,7 @@ header{
 footer p a{
   text-decoration: none;
   color:white;
+  background-color: rgb(8,8,8);
 }
 @media screen and (max-width: 600px) {
   main{

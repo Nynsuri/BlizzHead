@@ -1,26 +1,32 @@
-.accordion .answer{
+.accordion .answer {
     display: none;
 }
-.question{
+.question {
     background-color: black;
-    color: black;
     padding: 2%;
     color: white;
 }
-.accordion.active .answer{
+.accordion.active .answer {
     display: block;
     background-color: black;
     color: rgb(19, 19, 19);
     padding: 2%;
     color: white;
 }
-.question::before{
+.question::before {
     content: '+ ';
 }
-.question:hover, .accordion.active .question{
+.question:hover, .accordion.active .question {
     background-color: rgb(10, 10, 10);
     cursor: pointer;
 }
-.accordion.active .question::before{
+.accordion.active .question::before {
     content: '- ';
+}
+.edit-form {
+    display: none;
+}
+
+.edit-form.active {
+    display: block;
 }

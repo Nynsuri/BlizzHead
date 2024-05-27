@@ -20,53 +20,9 @@ class QnA {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         );        
         try {            
-            $this->conn = new PDO('mysql:host=' . $config['HOST'] . ';dbname=' .                
-            $config['DBNAME'] . ';port=' . $config['PORT'], $config['USER_NAME'],                
-            $config['PASSWORD'], $options);        
+            $this->conn = new PDO('mysql:host=' . $config['HOST'] . ';dbname=' . $config['DBNAME'] . ';port=' . $config['PORT'], $config['USER_NAME'], $config['PASSWORD'], $options);        
         } catch (PDOException $e) {            
-            die("Chyba pripojenia: " . $e->getMessage());        
-        }    
-    }
-
-   // Metóda na vloženie otázok a odpovedí z JSON súboru do databázy
-public function insertQnA(){
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['action'])) {
-            $action = $_POST['action'];
-            if ($action == 'update') {
-                $id = $_POST['id'];
-                $otazka = $_POST['otazka'];
-                $odpoved = $_POST['odpoved'];
-                $this->updateQnA($id, $otazka, $odpoved);
-            } elseif ($action == 'delete') {
-                $id = $_POST['id'];
-                $this->deleteQnA($id);
-            }
-        }
-    }
-    // Rest of the original insertQnA method...
-
-        try {        
-            $data = json_decode(file_get_contents(__ROOT__.'/data/datas.json'), true);        
-            $otazky = $data["otazky"];        
-            $odpovede = $data["odpovede"];        
-
-            $this->conn->beginTransaction();        
-            $sql = "INSERT INTO qna (otazka, odpoved) VALUES (:otazka, :odpoved)";        
-            $statement = $this->conn->prepare($sql);        
-            for ($i = 0; $i < count($otazky); $i++) { 
-              $exists = $this->checkIfExists($otazky[$i]);
-              if(!$exists){           
-                $statement->bindParam(':otazka', $otazky[$i]);            
-                $statement->bindParam(':odpoved', $odpovede[$i]);            
-                $statement->execute();      
-              }  
-            }        
-            $this->conn->commit();
-            echo "Dáta boli vložené";
-        } catch (Exception $e) {            
-            echo "Chyba pri vkladaní dát do databázy: " . $e->getMessage();            
-            $this->conn->rollback();        
+            die("Database connection failed: " . $e->getMessage());        
         }    
     }
 
@@ -84,14 +40,14 @@ public function insertQnA(){
     }
 
     public function getQnA() {
-        try{
+        try {
             $sql = "SELECT * FROM qna";
             $statement = $this->conn->prepare($sql);
             $statement->execute();
             $qna = $statement->fetchAll();
             return $qna;
-        } catch (PDOException $e){
-            echo "Chyba pri načítaní otázok a odpovedí: ".$e->getMessage();
+        } catch (PDOException $e) {
+            echo "Chyba pri načítaní otázok a odpovedí: " . $e->getMessage();
         }
     }
 
@@ -134,45 +90,61 @@ public function insertQnA(){
         }
     }
 
-    private function checkIfExists($otazka) {
-        $sql = "SELECT COUNT(*) FROM qna WHERE otazka = :otazka";
-        $statement = $this->conn->prepare($sql);
-        $statement->bindParam(":otazka", $otazka);
-        $statement->execute();
-        $count = $statement->fetchColumn();
-        return $count > 0;
-    }
-
-    public function displayQnA(){
-        try{
+    public function displayQnA() {
+        try {
             $qna = $this->getQnA();
-            if($qna){
-                echo '<section class="container">';
-                foreach($qna as $row){
-                    echo '<div class="accordion">
-                    <div class="question">'.$row['otazka'].'</div>
-                    <div class="answer">'.$row['odpoved'].'</div>
-                    </div>';
+            if ($qna) {
+                echo '<div class="accordion" id="qnaAccordion">';
+                foreach ($qna as $row) {
+                    $id = $row['id'];
+                    echo '<div class="card">';
+                    echo '<div class="card-header" style="background-color:black;   "id="heading' . $id . '">';
+                    echo '<h2 class="mb-0">';
+                    echo '<button class="btn btn-link text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $id . '" aria-expanded="true" aria-controls="collapse' . $id . '">';
+                    echo htmlspecialchars($row['otazka']);
+                    echo '</button>';
+                    echo '</h2>';
+                    echo '</div>';
+                    echo '<div style="background-color:rgb(19,19,19);"  id="collapse' . $id . '" class="collapse" aria-labelledby="heading' . $id . '" data-bs-parent="#qnaAccordion">';
+                    echo '<div class="card-body text-white">';
+                    echo htmlspecialchars($row['odpoved']);
+                    echo '<form method="POST" class="edit-form">';
+                    echo '<input type="hidden" name="id" value="' . $id . '">';
+                    echo '<textarea name="otazka" class="form-control mb-2" required>' . htmlspecialchars($row['otazka']) . '</textarea>';
+                    echo '<textarea name="odpoved" class="form-control mb-2" required>' . htmlspecialchars($row['odpoved']) . '</textarea>';
+                    echo '<button class="btn btn-primary edit-button me-2" type="submit" name="action" value="update">Upraviť</button>';
+                    echo '<button class="btn btn-danger" type="submit" name="action" value="delete">Odstrániť</button>';
+                    echo '</form>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
                 }
-                echo '</section>';
-            }else{
+                echo '</div>';
+            } else {
                 echo "Žiadne otázky a odpovede k dispozícii.";
             }
-        } catch (PDOException $e){
-            echo "Chyba pri načítaní otázok a odpovedí: ".$e->getMessage();
+        } catch (PDOException $e) {
+            echo "Chyba pri načítaní otázok a odpovedí: " . $e->getMessage();
         }
     }
+    
+    
+    
 
     public function handleFormSubmission() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['action'])) {
                 $action = $_POST['action'];
-                if ($action == 'create') {
-                    $this->createQnA($_POST['otazka'], $_POST['odpoved']);
-                } elseif ($action == 'update') {
-                    $this->updateQnA($_POST['id'], $_POST['otazka'], $_POST['odpoved']);
-                } elseif ($action == 'delete') {
-                    $this->deleteQnA($_POST['id']);
+                $id = isset($_POST['id']) ? $_POST['id'] : null;
+                $otazka = isset($_POST['otazka']) ? $_POST['otazka'] : null;
+                $odpoved = isset($_POST['odpoved']) ? $_POST['odpoved'] : null;
+                
+                if ($action == 'create' && $otazka && $odpoved) {
+                    $this->createQnA($otazka, $odpoved);
+                } elseif ($action == 'update' && $id && $otazka && $odpoved) {
+                    $this->updateQnA($id, $otazka, $odpoved);
+                } elseif ($action == 'delete' && $id) {
+                    $this->deleteQnA($id);
                 }
             }
         }

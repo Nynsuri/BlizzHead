@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="css/slider.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
-<footer class="container bg-dark text-white">
+<body style="background-color:rgb(25, 25, 25);">
+<footer class="container text-white" style="background-color:rgb(25, 25, 25);" > 
     <div class="row">
       <div class="col-25">
         <h4>Kto sme</h4>
@@ -36,8 +36,7 @@
       Copyright ©
     </div>
   </footer>
-
-    <script src="js/menu.js"></script>
-    <script src="js/slider.js"></script>
+    
+   
 </body>
 </html>
